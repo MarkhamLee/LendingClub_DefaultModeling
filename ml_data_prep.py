@@ -21,23 +21,23 @@ import pandas as pd
 
 # data import function
 
-def import_data(csv_file):
+def import_data(csv_file: str) -> object:
 
     # function to import the data from a CSV file
 
     data_ml = pd.read_csv(csv_file)
 
-    return(data_ml)
+    return (data_ml)
 
 
-def delete_columns(data, column_list):
+def delete_columns(data: object, column_list: list) -> object:
 
     data.drop(column_list, inplace=True, axis=1)
 
     return data
 
 
-def add_dummies(data):
+def add_dummies(data: object) -> object:
 
     # this function generates dummy variables and then
     # deletes the "default" column as we're going to be
@@ -59,7 +59,7 @@ def add_dummies(data):
     return data
 
 
-def find_correlations(data, threshold):
+def find_correlations(data: object, threshold: float) -> list:
 
     # identify correlated features and then remove them from the
     # data 'data_ml' data frame
@@ -86,15 +86,14 @@ def find_correlations(data, threshold):
     return list(correlated_features)
 
 
-
-def write_data(data, file_name):
+def write_data(data: object, file_name: str):
 
     # writes data to a csv when passed a data frame and a string with the
     # file name
 
     data.to_csv(file_name, index=False)
 
-    return(print('file processing complete'))
+    return (print('file processing complete'))
 
 
 def main():
