@@ -3,7 +3,7 @@ This goal of this project was to take data from Lending Club (a peer to peer len
 
 ### High Level Results
 
-* If Lending Club only funded the loans slected by the model they would've earned ~$80 million less than they woud've if they had just originated loans in the top tiers, however, their capital outlay would've been reduced by **2.5 Billion**. 
+* If Lending Club only funded the loans slected by the model they would've earned ~$80 million less than they woud've if they had just originated loans in the top tiers, however, their capital outlay would've been reduced by **2.5 Billion**. While $80M is ~3.2% of $2.5 billion, keep in mind that the 3.2% is their gross return over the course of a multi-year investment. For the period time covered in the analysis their annualized return was about 1.1%. [For reference between 2011 and 2016 the range of the 10-yr T-bill rate was between 1.8 and 2.78%.](https://www.macrotrends.net/2016/10-year-treasury-bond-rate-yield-chart). One can easily argue that Lending Club would've been better off investing that $2.5 billion in capital elsewhere. 
 * Compared to the original portfolio the loans selected by the model had a **default rate of 11.2% vs the 19.2% default rate** of the original group of loans. 
 
 ## About Lending Club
