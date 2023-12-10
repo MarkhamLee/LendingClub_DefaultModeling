@@ -8,9 +8,9 @@ converted to 0.1929
 current monthly debt payments, calculates net gain as loan amount - received
 interest, principal and late fees. Net gain was calculated in this fashion
 as it was a straight forward measure that didn't require using anticipated
-principle + interest, as a customer who paid their loan back early would 
+principle + interest, as a customer who paid their loan back early would
 "technically" be counted as a loss, since 100% of principle would be paid
-back, but less than the anticipated interest would've been paid. 
+back, but less than the anticipated interest would've been paid.
 4) Fills in 0 for NaN in scenarios where it's a simple fix and doesn't
 require a lot of analysis. E.g. NaNs for customers without a credit
 card balance
@@ -21,25 +21,25 @@ cleaning, EDA and machine learning simpler. The subsetted columns are based
 on a preliminary analysis of the data, focusing on the columns that Lending
 Club would've when the customer first applied for the loan and getting rid of
 the columns that contained data gathered over the course of the customer paying
-back the loan. 
+back the loan.
 """
 
 import pandas as pd
 import numpy as np
-import warnings 
+import warnings
 warnings.filterwarnings('ignore')
 
 
-def import_data(file_name):
+def import_data(file_name: str) -> object:
 
     # function that imports data file with Lending Club approved loan data
 
     lending = pd.read_csv(file_name, low_memory=False)
 
-    return(lending)
+    return (lending)
 
 
-def subset_data(df):
+def subset_data(df: object) -> object:
 
     lending_subset = df[['funded_amnt', 'term', 'int_rate', 'installment',
                          'grade', 'emp_length', 'home_ownership', 'annual_inc',
@@ -64,7 +64,7 @@ def subset_data(df):
     return (lending_subset)
 
 
-def fix_data_types(data):
+def fix_data_types(data: object) -> object:
 
     # Fix columns that are the wrong data type or have characters we
     # don't need like '%'
@@ -115,7 +115,6 @@ def fix_data_types(data):
                                      format='%b-%y',
                                      errors='coerce').dt.floor('D')
 
-                                     
     data['earliest_cr_line'] = pd.to_datetime(data['earliest_cr_line'],
                                               format='%b-%y',
                                               errors='coerce').dt.floor('D')
@@ -132,17 +131,17 @@ def fix_data_types(data):
     return data
 
 
-def fix_dates(data):
+def fix_dates(data: object) -> object:
 
     # common for dates to mistakenly get entered in as
     # "future dates" for earliest credit line this function removes those rows
 
     data = data[(data['length_of_credit_history'] >= 0)]
 
-    return(data)
+    return (data)
 
 
-def measures(data):
+def measures(data: object) -> object:
 
     # calculate monthly income
 
@@ -176,14 +175,15 @@ def measures(data):
                                     'updated_monthly_debt_payments']
                                     / data.loc[:, 'monthly_income'])
 
-    data.loc[:, 'net_gain'] = ((data.loc[:,'total_rec_prncp'] + data.loc[:,'total_rec_int'] +\
-         data.loc[:,'total_rec_late_fee']) -  data.loc[:, 'funded_amnt'])
+    data.loc[:, 'net_gain'] = ((data.loc[:, 'total_rec_prncp'] +
+                                data.loc[:, 'total_rec_int'] +
+                                data.loc[:, 'total_rec_late_fee']) -
+                               data.loc[:, 'funded_amnt'])
 
     return data
 
 
-
-def fix_na(data):
+def fix_na(data: object) -> object:
 
     # fill in NaNs with zeroes for those columns as they won't require
     # data transforms E.g. situations like months since last delinquency
@@ -209,7 +209,7 @@ def fix_na(data):
     return data
 
 
-def write_file(data, filename):
+def write_file(data: object, filename: str) -> str:
 
     data.to_csv(filename, date_format='%Y-%m-%d', index=False)
 

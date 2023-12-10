@@ -1,5 +1,5 @@
 import pandas as pd
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import seaborn as sns
 
 
@@ -11,25 +11,25 @@ class EDA:
         # and then calculates high level performance metrics with respect
         # to investment gains.
 
-        columns = ['total_loan_value', 'total_net_gains','avg_interest rate', 'avg_loan_amount',
-                   'avg_gains($)', 'avg_gains(%)', 'annualized_return']
+        columns = ['total_loan_value', 'total_net_gains', 'avg_interest rate',
+                   'avg_loan_amount', 'avg_gains($)', 'avg_gains(%)',
+                   'annualized_return']
 
-
-        self.perf_df = pd.DataFrame(columns = columns)
+        self.perf_df = pd.DataFrame(columns=columns)
 
         self._output_list = []
 
         # this function calculates high level data like average interest,
         # loan size, net gains and annualized returns
 
-        # calculate total loan value 
+        # calculate total loan value
         total_loans = df['funded_amnt'].sum()
 
-        # calculate total gains 
+        # calculate total gains
         total_gains = df['net_gain'].sum()
 
-        # default rate 
-        #default_rate = df['paid'].mean()
+        # default rate
+        # default_rate = df['paid'].mean()
 
         # calculate average interest rate
         avg_interest_rate = 100 * df['int_rate'].mean()
@@ -55,13 +55,13 @@ class EDA:
 
         # add calculations to output list
 
-        self._output_list = [total_loans, total_gains, avg_interest_rate, avg_loan_size,
-                             avg_gains, avg_gains_per, annualized_return]
+        self._output_list = [total_loans, total_gains, avg_interest_rate,
+                             avg_loan_size, avg_gains, avg_gains_per,
+                             annualized_return]
 
         return self.add_df(self._output_list, self.perf_df,)
-        
 
-    def add_df(self, data, df):
+    def add_df(self, data: object, df: object) -> object:
 
         # provided with a list and a data frame this method will
         # insert that list as a row in that data frame
@@ -76,7 +76,7 @@ class EDA:
 
         return self._df
 
-    def find_correlations(self, data, threshold):
+    def find_correlations(self, data: object, threshold: float) -> list:
 
         # identify correlated features and then remove them from the
         # data 'data_ml' data frame
@@ -101,7 +101,7 @@ class EDA:
 
         return list(self._correlated_features)
 
-    def subset_data(self, data, removal_list):
+    def subset_data(self, data: object, removal_list: list) -> object:
 
         self._data = data
 
@@ -109,15 +109,15 @@ class EDA:
         # inputs: data frame, removal list from prior function
         # this and the other function will built to be reusable for a
         # variety of projects and to avoid errors related to typing
-        # in column name by hand
-        # this column can also be generally used to remove any columns
-        # from a data frame
+        # in column name by hand this column can also be generally
+        # used to remove any column from a data frame
 
         self._data.drop(removal_list, inplace=True,  axis=1)
 
         return self._data
 
-    def add_column(self, col_list, data, position, title):
+    def add_column(self, col_list: list, data: object, position: int,
+                   title: str) -> object:
 
         self._data = data
 
@@ -125,170 +125,115 @@ class EDA:
 
         return self._data
 
+    def update_index(self, add_list: list, df: object) -> object:
 
-    def update_index(self, add_list, df): 
-    
         df_index = []
 
-
         performance_df = pd.DataFrame(columns=['avg_interest_rate',
-                                       'avg_loan_amount',
-                                       'avg_interest_received',
-                                       'avg_gains($)',
-                                       'avg_gains(%)',
-                                       'avg_total_payments',
-                                       'annualized_return'])
+                                               'avg_loan_amount',
+                                               'avg_interest_received',
+                                               'avg_gains($)',
+                                               'avg_gains(%)',
+                                               'avg_total_payments',
+                                               'annualized_return'])
 
+        # update existing index list with new elements,
+        # requires passing a list of values for
+        # the index, as well as data rame being adjusted
 
-        # update existing index list with new elements, requires passing a list of values for
-        # the index, as well as 
-        
         df_index.extend(add_list)
-        
-        # update performance data frame index 
-        
-        df = df.index = df_index 
-        
-        return performance_df 
 
+        # update performance data frame index
 
-    # function that will append two data frames together 
+        df = df.index = df_index
 
-    def append_df(self, df1, df2):
-        
+        return performance_df
+
+    # function that will append two data frames together
+    def append_df(self, df1: object, df2: object) -> object:
+
         df1 = df1.append(df2, ignore_index=True)
-            
-        return df1 
 
-    # function that will create two side by side violin plots showing the distribution of a 
-    # variable on the Y axis vs a categorical variable on the x axis. 
-    # this function is used by passing a data frame, plus the column label for the x and y axis. 
+        return df1
 
-    def violin_plot(self, x, y, data, title):
-        
+    # function that will create two side by side violin plots showing
+    # the distribution of a variable on the Y axis vs a categorical
+    # variable on the x axis. This function is used by passing a data frame,
+    # plus the column label for the x and y axis.
+    def violin_plot(self, x: object, y: object, data: object, title: str):
+
         ax = sns.violinplot(x=x, y=y, inner='quartile', data=data)
         ax.set_title(title, fontsize=16)
-        
-        return ax 
-    
-    # data frame for counting # of items of a particular category e.g. % defaults vs. paid off
-    # for loans 
 
-    def categorical_count(self, data, category):
-        
+        return ax
+
+    # data frame for counting # of items of a particular category
+    # e.g. % defaults vs. paid off for loans
+    def categorical_count(self, data: object, category: str) -> list:
+
         # generate a new df with a count of each category
-        
+
         cat_count = pd.DataFrame(data[category].value_counts())
-        
-        # reset index and fix column labels 
-        
+
+        # reset index and fix column labels
+
         cat_count = cat_count.reset_index()
 
-        cat_count.rename(columns={category:'count'}, inplace = True)
-        cat_count.rename(columns={'index':category}, inplace = True)
-        
-    
-        
-        # calculate # of items so we can calculate % of total 
-        
+        cat_count.rename(columns={category: 'count'}, inplace=True)
+        cat_count.rename(columns={'index': category}, inplace=True)
+
+        # calculate # of items so we can calculate % of total
+
         total_items = len(data)
-        
-        
-        # add % of total 
-        
+
+        # add % of total
+
         cat_count['per_of_total'] = cat_count['count'] / total_items
-        
 
         return cat_count
 
-
-
-    def make_bins(self, data, freq, value):
-
-
-        # get minimum and maximum values
-
-        lowest = data[value].min()
-        highest = data[value].max()
-
-
-        # create bins 
-        bins = pd.interval_range(start=lowest, freq=freq, end=highest, closed='left')
-
-        bin_column = value + '_bin'
-        
-        
-        data[bin_column] = pd.cut(data[value], bins=bins)
-
-
-        # group by bins and use .mean() to get the default rate for each 
-
-        
-        
-        bin_df = data.groupby(bin_column).mean()
-
-        # there won't be values or all of the bins 
-
-        bin_df = bin_df.round(3)
-        
-        
-        return bin_df
-
-
     # this function will put a range of values into bins,
-    # useful for doing things like comparing an outcome (like loan status) 
-    # vs an income or interest rate range 
-    # the input variables are data = the data frame, freq = intervals the vales 
-    # sliced by. Value is the column in the data frame we're putting into bins 
-
-
-    def make_bins(self, data, freq, value):
-
+    # useful for doing things like comparing an outcome (like loan status)
+    # vs an income or interest rate range
+    # the input variables are data = the data frame, freq = intervals the vales
+    # sliced by. Value is the column in the data frame we're putting into bins
+    def make_bins(self, data: object, freq: float, value) -> object:
 
         # get minimum and maximum values
-
         lowest = data[value].min()
         highest = data[value].max()
 
-
-        # create bins 
-        bins = pd.interval_range(start=lowest, freq=freq, end=highest, closed='left')
+        # create bins
+        bins = pd.interval_range(start=lowest, freq=freq, end=highest,
+                                 closed='left')
 
         bin_column = value + '_bin'
-        
-        
+
         data[bin_column] = pd.cut(data[value], bins=bins)
 
-
-        # group by bins and use .mean() to get the default rate for each 
-
-        
-        
+        # group by bins and use .mean() to get the default rate for each
         bin_df = data.groupby(bin_column).mean()
-
-        # there won't be values or all of the bins 
-
         bin_df = bin_df.round(3)
-        
-        
+
         return bin_df
 
-        # this function will generate line plots 
+        # this function will generate line plots
+    def line_plot(self, data: object, x: object, y: object,
+                  title: str) -> object:
 
-    def line_plot(self, data, x, y, title):
-        
         sns.lineplot(data=data, x=x, y=y)
         plt.title(title)
 
-    def default_by_category(self, data, category):
-        
-        data = pd.get_dummies(data, columns = ['loan_status'])
+    def default_by_category(self, data: object, category: str) -> object:
 
-        # update the column names 
-        data.rename(columns={'loan_status_Charged Off':'default'}, inplace = True)
-        data.rename(columns={'loan_status_Fully Paid':'paid'}, inplace = True)
-        
-        #group by category 
+        data = pd.get_dummies(data, columns=['loan_status'])
+
+        # update the column names
+        data.rename(columns={'loan_status_Charged Off': 'default'},
+                    inplace=True)
+        data.rename(columns={'loan_status_Fully Paid': 'paid'}, inplace=True)
+
+        # group by category
         data = data.groupby(category).mean()
-        
-        return data 
+
+        return data
