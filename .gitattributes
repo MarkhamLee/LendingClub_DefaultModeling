@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Jupyter notebooks have a lot of metadata that skews the language counts 
+# Removing notebooks so language count is proper/correct. 
+*.ipynb linguist-documentation

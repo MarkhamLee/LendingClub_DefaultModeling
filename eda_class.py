@@ -5,7 +5,7 @@ import seaborn as sns
 
 class EDA:
 
-    def calc_performance(self, df):
+    def calc_performance(self, df: object):
 
         # this method takes a data frame with loan information as an input
         # and then calculates high level performance metrics with respect
