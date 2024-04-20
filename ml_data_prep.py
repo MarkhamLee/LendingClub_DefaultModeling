@@ -1,25 +1,15 @@
 # this file performs pre-processing for machine learning in the form of feature
-# selection and removing correlated features.
-# It can also preform high level data cleaning, as there are functions that
-# would the user to remove columns that may have been useful for EDA,
-# but aren't useful for ML
+# selection and removing correlated features. It can also preform high level
+# data cleaning, as there are functions that would the user to remove columns
+# that may have been useful for EDA, but aren't useful for ML.
 # Another purpose of this file is that it's not per se project specific,
 # I can pass datasets for multiple projects through this file and it
 # will generate dummy variables and delete unneeded features without
 # much customization
-# I didn't call the correlation functions in this particular version, it
-# was easier to call it in the notebook that for the learning modeling. It was
-# left in this file as a utility function in case I needed it later.
-
-# import needed packages
-
 import pandas as pd
 
-
-# set parameters for seeing all columns
-
-
 # data import function
+
 
 def import_data(csv_file: str) -> object:
 
