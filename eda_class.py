@@ -5,7 +5,7 @@ import seaborn as sns
 
 class EDA:
 
-    def calc_performance(self, df: object):
+    def calc_performance(self, df: pd.Dataframe) -> pd.DataFrame:
 
         # this method takes a data frame with loan information as an input
         # and then calculates high level performance metrics with respect
@@ -61,7 +61,7 @@ class EDA:
 
         return self.add_df(self._output_list, self.perf_df,)
 
-    def add_df(self, data: object, df: object) -> object:
+    def add_df(self, data: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
 
         # provided with a list and a data frame this method will
         # insert that list as a row in that data frame
@@ -76,7 +76,7 @@ class EDA:
 
         return self._df
 
-    def find_correlations(self, data: object, threshold: float) -> list:
+    def find_correlations(self, data: pd.DataFrame, threshold: float) -> list:
 
         # identify correlated features and then remove them from the
         # data 'data_ml' data frame
@@ -101,7 +101,7 @@ class EDA:
 
         return list(self._correlated_features)
 
-    def subset_data(self, data: object, removal_list: list) -> object:
+    def subset_data(self, data: pd.DataFrame, removal_list: list) -> object:
 
         self._data = data
 
@@ -116,8 +116,8 @@ class EDA:
 
         return self._data
 
-    def add_column(self, col_list: list, data: object, position: int,
-                   title: str) -> object:
+    def add_column(self, col_list: list, data: pd.DataFrame, position: int,
+                   title: str) -> pd.DataFrame:
 
         self._data = data
 
@@ -150,7 +150,7 @@ class EDA:
         return performance_df
 
     # function that will append two data frames together
-    def append_df(self, df1: object, df2: object) -> object:
+    def append_df(self, df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
 
         df1 = df1.append(df2, ignore_index=True)
 
@@ -169,7 +169,7 @@ class EDA:
 
     # data frame for counting # of items of a particular category
     # e.g. % defaults vs. paid off for loans
-    def categorical_count(self, data: object, category: str) -> list:
+    def categorical_count(self, data: pd.DataFrame, category: str) -> list:
 
         # generate a new df with a count of each category
 
@@ -197,7 +197,8 @@ class EDA:
     # vs an income or interest rate range
     # the input variables are data = the data frame, freq = intervals the vales
     # sliced by. Value is the column in the data frame we're putting into bins
-    def make_bins(self, data: object, freq: float, value) -> object:
+    def make_bins(self, data: pd.DataFrame,
+                  freq: float, value: str) -> pd.DataFrame:
 
         # get minimum and maximum values
         lowest = data[value].min()
@@ -218,13 +219,14 @@ class EDA:
         return bin_df
 
         # this function will generate line plots
-    def line_plot(self, data: object, x: object, y: object,
+    def line_plot(self, data: pd.DataFrame, x: object, y: object,
                   title: str) -> object:
 
         sns.lineplot(data=data, x=x, y=y)
         plt.title(title)
 
-    def default_by_category(self, data: object, category: str) -> object:
+    def default_by_category(self, data: pd.DataFrame,
+                            category: str) -> pd.DataFrame:
 
         data = pd.get_dummies(data, columns=['loan_status'])
 

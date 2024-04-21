@@ -39,7 +39,7 @@ def import_data(file_name: str) -> object:
     return (lending)
 
 
-def subset_data(df: object) -> object:
+def subset_data(df: pd.DataFrame) -> pd.Dataframe:
 
     lending_subset = df[['funded_amnt', 'term', 'int_rate', 'installment',
                          'grade', 'emp_length', 'home_ownership', 'annual_inc',
@@ -64,7 +64,7 @@ def subset_data(df: object) -> object:
     return (lending_subset)
 
 
-def fix_data_types(data: object) -> object:
+def fix_data_types(data: pd.DataFrame) -> pd.DataFrame:
 
     # Fix columns that are the wrong data type or have characters we
     # don't need like '%'
@@ -131,7 +131,7 @@ def fix_data_types(data: object) -> object:
     return data
 
 
-def fix_dates(data: object) -> object:
+def fix_dates(data: pd.DataFrame) -> pd.DataFrame:
 
     # common for dates to mistakenly get entered in as
     # "future dates" for earliest credit line this function removes those rows
@@ -141,7 +141,7 @@ def fix_dates(data: object) -> object:
     return (data)
 
 
-def measures(data: object) -> object:
+def measures(data: pd.DataFrame) -> pd.DataFrame:
 
     # calculate monthly income
 
@@ -183,7 +183,7 @@ def measures(data: object) -> object:
     return data
 
 
-def fix_na(data: object) -> object:
+def fix_na(data: pd.DataFrame) -> pd.DataFrame:
 
     # fill in NaNs with zeroes for those columns as they won't require
     # data transforms E.g. situations like months since last delinquency
@@ -209,7 +209,7 @@ def fix_na(data: object) -> object:
     return data
 
 
-def write_file(data: object, filename: str) -> str:
+def write_file(data: pd.DataFrame, filename: str) -> str:
 
     data.to_csv(filename, date_format='%Y-%m-%d', index=False)
 
