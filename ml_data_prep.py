@@ -27,7 +27,7 @@ def delete_columns(data: object, column_list: list) -> object:
     return data
 
 
-def add_dummies(data: object) -> object:
+def add_dummies(data: pd.Dataframe) -> object:
 
     # this function generates dummy variables and then
     # deletes the "default" column as we're going to be
@@ -49,7 +49,7 @@ def add_dummies(data: object) -> object:
     return data
 
 
-def find_correlations(data: object, threshold: float) -> list:
+def find_correlations(data: pd.Dataframe, threshold: float) -> list:
 
     # identify correlated features and then remove them from the
     # data 'data_ml' data frame

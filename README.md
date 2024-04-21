@@ -29,9 +29,9 @@ Lending Club shut down their peer-to-peer lending business after purchasing a ba
 
 **Additionally: this code, analysis and files in this repository are strictly for educational purposes and are not meant to constitute investment advice.** 
 
-### Replicating Results
+## Replicating Results
 
-Lending Club no longer offers individual investors the ability to invest in their loans and no longer provides this data via their web site, so you won't be able to use my code to attempt to replicate my results. I.e. this is just an example of my work, rather than a project someone can clone and work with. 
+Lending Club no longer offers individual investors the ability to invest in their loans and no longer provides this data via their web site, so you won't be able to use my code to attempt to replicate my results. I.e. this is just an example of my work, rather than a project someone can clone and work with. However, the EDA scripts were designed to be modular/re-usable so they could easily be used with a similar dataset or just for other data science projects in general. E.g., the find correlations method in ml_data_prep.py
 
 ### Files contained within this repo
 
